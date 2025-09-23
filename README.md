@@ -4,7 +4,7 @@
 [![Languages](https://img.shields.io/badge/language-Swift-orange.svg)]()
 [![License](https://img.shields.io/badge/license-Commercial-green.svg)]()
 
-**Rigi iOS Capture** is a powerful macOS application that streamlines the localization preview workflow for iOS developers. It enables direct capture from iOS Simulators and seamless integration with the Rigi localization platform.
+**Rigi iOS Capture** is a powerful macOS application that streamlines the localization preview workflow for iOS developers. It enables direct capture from iOS Simulators with seamless integration to the Rigi localization platform.
 
 ## Table of Contents
 
@@ -12,25 +12,22 @@
 2. [Key Features](#key-features)
 3. [System Requirements](#system-requirements)
 4. [Installation](#installation)
-5. [Getting Started](#getting-started)
-6. [Workflow Overview](#workflow-overview)
-7. [Step-by-Step Guide](#step-by-step-guide)
-   - [1. Create or Select a Project](#1-create-or-select-a-project)
-   - [2. Configure Project Settings](#2-configure-project-settings)
-   - [3. Setup Your Xcode Project](#3-setup-your-xcode-project)
-   - [4. Sync Localization Files](#4-sync-localization-files)
-   - [5. Import Pseudo Language](#5-import-pseudo-language)
-   - [6. Capture Previews](#6-capture-previews)
-   - [7. Translate with Preview Context](#7-translate-with-preview-context)
-8. [Tips and Best Practices](#tips-and-best-practices)
-9. [Troubleshooting](#troubleshooting)
-10. [Support](#support)
+5. [Workflow Overview](#workflow-overview)
+6. [Step 1: Xcode Project Setup](#step-1-xcode-project-setup)
+7. [Step 2: Rigi Server Setup](#step-2-rigi-server-setup)
+8. [Step 3: Rigi iOS Capture Setup](#step-3-rigi-ios-capture-setup)
+9. [Step 4: Localization Sync](#step-4-localization-sync)
+10. [Step 5: Capture and Upload](#step-5-capture-and-upload)
+11. [Step 6: Translate with Previews](#step-6-translate-with-previews)
+12. [Tips and Best Practices](#tips-and-best-practices)
+13. [Troubleshooting](#troubleshooting)
+14. [Support](#support)
 
 <br/>
 
 ## Introduction
 
-**Rigi iOS Capture** replaces the traditional SDK and command-line workflow with a modern, user-friendly macOS application. It provides a complete solution for capturing localization previews from iOS Simulators and managing the entire localization workflow with the Rigi platform.
+**Rigi iOS Capture** provides a complete solution for capturing localization previews directly from iOS Simulators. The app uses intelligent text scanning technology to detect translatable text and generates visual previews that help translators understand the context of each string.
 
 Find out more about the Rigi Software Localization Tool at [https://xtm.cloud/rigi/](https://xtm.cloud/rigi/)
 
@@ -38,309 +35,316 @@ Find out more about the Rigi Software Localization Tool at [https://xtm.cloud/ri
 
 ## Key Features
 
-- **Native macOS Application** - No SDK integration required in your Xcode project
-- **Direct Simulator Capture** - Capture screenshots directly from running iOS Simulators
-- **Automatic OCR Scanning** - Intelligent text detection and recognition
+- **Native macOS Application** - Simple drag-and-drop installation
+- **Direct Simulator Capture** - Capture screenshots from running iOS Simulators
+- **Intelligent Text Scanning** - Automatic text detection and recognition
 - **Project Management** - Organize multiple localization projects
-- **Seamless Rigi Integration** - Direct upload to Rigi server
+- **Seamless Rigi Integration** - Direct upload to Rigi platform
 - **Visual Preview Generation** - Automatic preview creation with text highlighting
-- **Localization Sync** - Import/export XLIFF files with pseudo language support
+- **Xcode Localization Catalog Support** - Import/export XLIFF files directly
 
 <br/>
 
 ## System Requirements
 
 - macOS 11.0 (Big Sur) or later
-- Xcode 13.0 or later
-- Active iOS Simulator
+- Xcode 13.0 or later with Localization Catalogs
+- iOS Simulator
 - Rigi server account with API access
+
+**Important**: This tool requires your Xcode project to use Localization Catalogs (Xcode 15+). If your project uses legacy .strings or .stringsdict files, you'll need to migrate first. See [Apple's Localization documentation](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog) for migration instructions.
 
 <br/>
 
 ## Installation
 
-1. Download the latest installer from [https://github.com/xtrf/rigi-ios-capture](https://github.com/xtrf/rigi-ios-capture)
-2. Open the downloaded DMG file
-3. Drag **Rigi iOS Capture.app** to your Applications folder
-4. If you need to uninstall later, use the included uninstaller
+Download and install Rigi iOS Capture:
 
 ![Installation](docs/assets/20.1-capture-tool-installer.png)
 
-<br/>
-
-## Getting Started
-
-### First Launch
-
-1. Open **Rigi iOS Capture** from your Applications folder
-2. The app will prompt you to create your first project
-3. Follow the setup wizard to configure your project
-
-### Connect to Rigi Server
-
-Before starting, ensure you have:
-- Your Rigi server URL (e.g., `https://test.rigi.io`)
-- An API access token with appropriate permissions
+1. Download the installer from [https://github.com/xtrf/rigi-ios-capture](https://github.com/xtrf/rigi-ios-capture)
+2. Open the downloaded DMG file
+3. Drag **Rigi iOS Capture.app** to your Applications folder
+4. The installer includes an uninstaller for easy removal
 
 <br/>
 
 ## Workflow Overview
 
-The Rigi iOS Capture workflow consists of these main steps:
+The complete workflow consists of three main setup phases followed by the capture process:
 
-1. **Setup** - Configure project and connect to Rigi server
-2. **Export** - Export localization catalog from Xcode
-3. **Sync** - Upload localizations to Rigi and receive pseudo language
-4. **Import** - Import pseudo language back to Xcode
-5. **Capture** - Run app in Simulator and capture screens
-6. **Upload** - Send previews to Rigi for translation
-7. **Translate** - Translators work with visual context on Rigi platform
+1. **Xcode Setup** - Prepare your iOS project for localization
+2. **Rigi Server Setup** - Configure your project on the Rigi platform
+3. **Capture Tool Setup** - Connect the macOS app to your project
+4. **Sync & Capture** - Export, sync, capture, and translate
 
 <br/>
 
-## Step-by-Step Guide
+## Step 1: Xcode Project Setup
 
-### 1. Create or Select a Project
+### Prerequisites - Localization Catalogs
 
-When you first launch Rigi iOS Capture, you'll need to create a project:
+Rigi iOS Capture requires your project to use Xcode's Localization Catalogs (.xcstrings files). If you're using legacy .strings files, you must migrate first:
 
-![Create Project](docs/assets/20.2-create-capture-project.png)
+1. Follow [Apple's migration guide](https://developer.apple.com/documentation/xcode/localizing-and-varying-text-with-a-string-catalog)
+2. In Xcode: Select your .strings files → Editor → Migrate to String Catalog
+3. Verify all strings are properly migrated
 
-1. Click the project dropdown and select "Create project"
-2. Enter a project name (e.g., "Fruta Demo")
-3. Click **Create Project**
+### Add Pseudo Language
 
-### Creating a Rigi Project (First Time Setup)
+First, add a pseudo language to your Xcode project. This special language will contain marked-up text for the capture process.
 
-If this is your first time setting up on the Rigi server:
+![Add Pseudo Language](docs/assets/01-add-speudo.png)
+
+1. Open your project in Xcode
+2. Navigate to Project Settings → Info → Localizations
+3. Click the + button to add a new language
+4. Select **Zulu (zu)** as your pseudo language
+5. This language will be used exclusively for capturing previews
+
+### Create a Dedicated Target (Optional)
+
+For better organization, create a separate target for captures:
+
+![Create Target](docs/assets/04-create-target.png)
+
+1. In Xcode, duplicate your existing target
+2. Name it appropriately (e.g., "Fruta iOS Capture")
+3. This keeps your production builds separate from capture builds
+
+### Configure Target Language
+
+Set the pseudo language for your capture target:
+
+![Set Target Language](docs/assets/05-set-target-language.png)
+
+1. Select your capture scheme
+2. Edit Scheme → Run → Options
+3. Set App Language to **Zulu**
+4. This ensures the app runs with pseudo-localized strings
+
+<br/>
+
+## Step 2: Rigi Server Setup
+
+### Create a Project on Rigi
+
+Set up your project on the Rigi platform:
 
 ![Create Rigi Project](docs/assets/11-create-rigi-project.png)
 
 1. Log into your Rigi server
-2. Create a new project
-3. Select your source language (e.g., English)
-4. Configure the project settings
+2. Click "Create project"
+3. Enter project details:
+   - Project name
+   - Description
+   - Source language (e.g., English)
+
+### Configure Pseudo Language
+
+Set the pseudo language in your Rigi project:
 
 ![Set Rigi Pseudo Language](docs/assets/12-set-rigi-pseudo.png)
 
-5. Set the pseudo language to match your Xcode configuration (e.g., Zulu)
-6. Save the project configuration
+1. In the project creation wizard
+2. Select **Zulu** as the pseudo language
+3. This must match the language added in Xcode
+4. The system will use this for generating preview markers
 
-![Set Target Languages](docs/assets/05-set-target-language.png)
+### Create API Access Token
 
-7. Add the target languages for translation
-8. These are the languages your app will be translated into
+Generate an authentication token for the capture tool:
 
-### 2. Configure Project Settings
+![Create API Token](docs/assets/14-create-rigi-access-token.png)
 
-Configure your project in three steps:
+1. Navigate to Settings → Access tokens
+2. Click "Create access token"
+3. Name it appropriately (e.g., "Capture Tool Access")
+4. Select required permissions:
+   - Update project settings
+   - Upload to workspace
+   - Download from workspace
+   - Tokenize strings
+   - Upload HTML Previews
+5. Copy and save the generated token securely
+
+<br/>
+
+## Step 3: Rigi iOS Capture Setup
+
+### Create a Capture Project
+
+Launch Rigi iOS Capture and create a new project:
+
+![Create Capture Project](docs/assets/20.2-create-capture-project.png)
+
+1. Open Rigi iOS Capture from Applications
+2. Click "Create Project"
+3. Enter a project name (e.g., "Fruta Demo")
+4. Click "Create Project" to continue
+
+### Configure Project Settings
+
+Complete the three configuration sections:
 
 ![Project Settings](docs/assets/21-capture-project-settings.png)
 
-#### Project Folder
-1. Click **Select Project Folder**
-2. Navigate to your Xcode project's root directory
-3. The app will automatically detect:
-   - Xcode project details
+#### Project Folder Configuration
+1. Click "Select Project Folder"
+2. Navigate to your Xcode project root
+3. The tool will automatically detect:
+   - Xcode project name
    - Localization status
    - Available languages
 
 #### Rigi Configuration
-1. Enter your **Project Server URL** from the Rigi platform
-2. Select **Source Language** (e.g., English)
-3. Select **Pseudo Language** (e.g., Zulu)
+1. Enter your **Project Server URL**
+   - Format: `https://test.rigi.io/projects/16`
+2. Select **Source Language** (must match Xcode)
+3. Select **Pseudo Language** (must be Zulu)
 4. Click **Save Configuration**
 
 #### Server Authentication
-1. Generate an API token on the Rigi server:
-   - Navigate to your project on Rigi
-   - Go to Settings → Access tokens
-   - Create a new token with required permissions:
-     - Update project settings
-     - Upload to workspace
-     - Download from workspace
-     - Tokenize strings
-     - Upload HTML Previews
-   
-   ![API Token Creation](docs/assets/14-create-rigi-access-token.png)
-
-2. Copy the token and paste it in the app
-3. Click **Test Connection** to verify
-4. Click **Save Token** to store securely
-
-### 3. Setup Your Xcode Project
-
-Before capturing previews, prepare your Xcode project:
-
-#### Create a Dedicated Target (Optional)
-
-For better organization, you can create a dedicated target for Rigi captures:
-
-![Create Target](docs/assets/04-create-target.png)
-
-1. Duplicate your existing target in Xcode
-2. Name it appropriately (e.g., "Fruta iOS Capture")
-3. This keeps your production builds separate from capture builds
-
-#### Add Pseudo Language
-
-1. In Xcode, go to your project settings
-2. Add a new localization language (we recommend Zulu - zu)
-3. This will be your pseudo language for preview generation
-
-![Add Language in Xcode](docs/assets/01-add-speudo.png)
-
-#### Export Localization Catalog
-
-1. In Xcode, select **Product → Export Localizations...**
-2. Save the localization catalog to a convenient location
-
-![Export Localizations](docs/assets/22-xcode-export-localization.png)
-
-### 4. Sync Localization Files
-
-Upload your localization files to Rigi:
-
-![Sync Localization](docs/assets/23-upload-localizations.png)
-
-1. Switch to the **Sync Localization** tab
-2. Drag and drop your exported localization folder or click **Browse Files**
-3. The app will validate and count translatable strings
-4. Click **Upload to Rigi**
-5. After successful upload, click **Open Import Folder**
-
-The upload process will:
-- Send all localization files to Rigi server
-- Generate pseudo language file with special markers `[# text #]`
-- Download the prepared pseudo language file
-
-![Upload Success](docs/assets/24-upload-success.png)
-
-### 5. Import Pseudo Language
-
-Import the generated pseudo language back to Xcode:
-
-1. In Xcode, select **Product → Import Localizations...**
-2. Navigate to the import folder opened in the previous step
-3. Select the pseudo language XLIFF file (e.g., `zu.xliff`)
-4. Import it to your project
-
-![Import Localizations](docs/assets/26-xcode-import-localization.png)
-
-### 6. Capture Previews
-
-Now you're ready to capture previews:
-
-#### Run Your App
-1. In Xcode, create a new scheme or duplicate existing one
-2. Set the **App Language** to your pseudo language (e.g., Zulu)
-3. Run the app in iOS Simulator
-
-![Scheme Configuration](docs/assets/30-xcode-run-pseudo-code.png)
-
-#### Capture Screenshots
-1. In Rigi iOS Capture, switch to the **Capture Previews** tab
-2. Select your running simulator from the dropdown
-3. Navigate to a screen in your app
-4. Click **Capture**
-
-![Capture Interface](docs/assets/31-capture-preview.png)
-
-The capture process will:
-- Take a screenshot of the current simulator screen
-- Use OCR to detect all text elements
-- Match detected text with your localization strings
-- Highlight recognized strings in green
-- Show statistics (scanned vs. translatable)
-
-#### Review and Upload
-1. Review the preview with highlighted text areas
-2. Check the statistics to ensure strings were recognized
-3. Click **Upload to Server** to send to Rigi
-
-### 7. Translate with Preview Context
-
-Once previews are uploaded, translators can work with visual context:
-
-![Translation Interface](docs/assets/32-translate-with-preview.png)
-
-1. Create a translation task on the Rigi server
-2. Translators can see the preview alongside each string
-3. Changes are reflected in real-time on the preview
-4. Complete translations and export when ready
+1. Paste the API token created earlier
+2. Click **Test Connection** to verify
+3. Upon successful connection, click **Save Token**
 
 <br/>
 
-## Tips and Best Practices
+## Step 4: Localization Sync
 
-### Project Organization
-- Create separate projects for each app or major feature
-- Use descriptive project names
-- Keep your API tokens secure
+### Export from Xcode
 
-### Pseudo Language Selection
-- Choose a language not used in your target markets
-- Zulu (zu) is recommended as it's rarely used in apps
-- Ensure the pseudo markers `[# #]` are visible in your app
+Export your project's localizations:
 
-### Capture Quality
-- Ensure text is clearly visible in the simulator
-- Capture at standard zoom levels (100%)
-- Navigate through all app screens systematically
-- Check coverage statistics to track progress
+<img src="docs/assets/22-xcode-export-localization.png" width="300">
 
-### Server Configuration
-- Always test your connection before starting work
-- Keep your API token in the macOS Keychain for security
-- Create project-specific tokens with minimal required permissions
+1. In Xcode, select Product → Export Localizations...
+2. Choose a destination folder
+3. Xcode will create a folder containing all localization files
+
+### Upload to Rigi
+
+Import the localizations into Rigi iOS Capture:
+
+![Upload Localizations](docs/assets/23-upload-localizations.png)
+
+1. Switch to the "Sync Localization" tab
+2. Drag and drop the exported folder onto the upload area
+   - Or click "Browse Files" to select
+3. The tool will validate and count all strings
+4. Review the file and string counts
+5. Click "Upload to Rigi"
+
+### Upload Success
+
+After successful upload:
+
+![Upload Success](docs/assets/24-upload-success.png)
+
+1. The tool confirms successful upload
+2. Shows total strings processed
+3. Displays the pseudo language code
+4. Click **Open Import Folder** to access the processed files
+5. The folder contains the pseudo-localized XLIFF file
+
+### Import Back to Xcode
+
+Import the pseudo-localized file:
+
+<img src="docs/assets/26-xcode-import-localization.png" width="300">
+
+1. In Xcode, select Product → Import Localizations...
+2. Navigate to the import folder
+3. Select the `zu.xliff` file
+4. Import it into your project
+5. Your strings now have `[# #]` markers for capture
+
+<br/>
+
+## Step 5: Capture and Upload
+
+### Run with Pseudo Language
+
+Launch your app with the pseudo locale:
+
+<img src="docs/assets/30-xcode-run-pseudo-code.png" width="500">
+
+1. Select your capture scheme in Xcode
+2. Verify it's set to use Zulu language
+3. Build and run in iOS Simulator
+4. Your app now displays marked-up text
+
+### Capture Previews
+
+Capture screens from the running simulator:
+
+![Capture Preview](docs/assets/31-capture-preview.png)
+
+1. In Rigi iOS Capture, go to "Capture Previews" tab
+2. Select your running simulator from the dropdown
+3. Navigate to screens in your app
+4. Click **Capture** to take a screenshot
+5. The tool will:
+   - Scan for text using intelligent text scanning
+   - Match text with localization strings
+   - Highlight recognized strings in green
+   - Show statistics (scanned vs. translatable)
+6. Review the preview
+7. Click **Upload to Server** to send to Rigi
+
+<br/>
+
+## Step 6: Translate with Previews
+
+Translators can now work with visual context:
+
+![Translate with Preview](docs/assets/32-translate-with-preview.png)
+
+1. On the Rigi server, translators see:
+   - The source text
+   - Visual preview showing where text appears
+   - Live preview updates as they translate
+2. Visual context helps ensure accurate translations
+3. Completed translations can be exported back to Xcode
 
 <br/>
 
 ## Troubleshooting
 
-### Common Issues
+### Simulator Issues
+- **Not detected**: Ensure iOS Simulator is running
+- **Can't capture**: Try restarting the Simulator
+- **Poor recognition**: Check text clarity and zoom level
 
-**Simulator not detected**
-- Ensure iOS Simulator is running
-- Try refreshing the simulator list
-- Restart the Simulator if needed
+### Connection Problems
+- **Test failed**: Verify server URL format
+- **Auth error**: Check API token permissions
+- **Network issues**: Verify internet connectivity
 
-**Low string recognition**
-- Verify pseudo language is properly imported
-- Check that strings are wrapped in `[# #]` markers
-- Ensure OCR can read the text clearly
+### Import/Export
+- **Missing strings**: Re-export from Xcode
+- **Import fails**: Verify file format and language code
+- **Markers not showing**: Check pseudo language import
 
-**Connection failures**
-- Verify your Rigi server URL
-- Check API token permissions
-- Ensure network connectivity
-
-**Import folder not opening**
-- Check file permissions
-- Verify the export was successful
-- Look for the folder on your Desktop
-
-### Debug Information
-
-The app provides detailed feedback:
-- Connection status in the footer
-- Upload progress indicators
-- String count statistics
-- OCR scanning results
+### Localization Catalog Issues
+- **No XLIFF export option**: Ensure you're using Localization Catalogs (.xcstrings)
+- **Legacy files**: Migrate .strings files to String Catalogs first
+- **Missing languages**: Add languages in project settings before export
 
 <br/>
 
 ## Support
 
-For additional help and resources:
+For additional help:
 
 - **Documentation**: [https://xtm.cloud/rigi/](https://xtm.cloud/rigi/)
-- **GitHub Issues**: [https://github.com/xtrf/rigi-ios-capture](https://github.com/xtrf/rigi-ios-capture)
-- **Rigi Support**: Contact your Rigi administrator
+- **GitHub**: [https://github.com/xtrf/rigi-ios-capture](https://github.com/xtrf/rigi-ios-capture)
+- **Support**: Contact your Rigi administrator
 
 ---
 
 Copyright © 2025 Rigi.io powered by XTM. All rights reserved.
 
-Use of Rigi iOS Capture is allowed in combination with a paid Rigi Cloud subscription.
+Use of Rigi iOS Capture requires a paid Rigi Cloud subscription.
 Terms and conditions apply, see [https://rigi.io/terms-and-conditions-2025/]()
