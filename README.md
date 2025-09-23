@@ -201,13 +201,26 @@ Complete the three configuration sections:
 1. Enter your **Project Server URL**
    - Format: `https://test.rigi.io/projects/16`
 2. Select **Source Language** (must match Xcode)
-3. Select **Pseudo Language** (must be Zulu)
+3. Select **Pseudo Language** (must match Xcode)
 4. Click **Save Configuration**
 
 #### Server Authentication
 1. Paste the API token created earlier
 2. Click **Test Connection** to verify
 3. Upon successful connection, click **Save Token**
+
+### Settings Storage and Team Sharing
+
+The Rigi iOS Capture app stores configuration in two locations:
+
+**Project Settings** are saved in your project directory:
+
+- Location: `<PROJECT-FOLDER>/RigiSDK/`
+- Contains: `rigi.ini` (project settings) and `rigi.meta` (translatable texts)
+
+**Team Sharing**: Add these files to your Git repository to share configuration with your team
+
+**Security Note**: The API access token is stored securely in your macOS Keychain, never in project files. Each team member must configure their own token.
 
 <br/>
 
@@ -345,6 +358,3 @@ For additional help:
 ---
 
 Copyright © 2025 Rigi.io powered by XTM. All rights reserved.
-
-Use of Rigi iOS Capture requires a paid Rigi Cloud subscription.
-Terms and conditions apply, see [https://rigi.io/terms-and-conditions-2025/]()
