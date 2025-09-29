@@ -302,6 +302,7 @@ Capture screens from the running simulator:
    - Scan for text using intelligent text scanning
    - Match text with localization strings
    - Highlight recognized strings in green
+   - Highlight unmactched strings in orange
    - Show statistics (scanned vs. translatable)
 6. Review the preview
 7. Click **Upload to Server** to send to Rigi
