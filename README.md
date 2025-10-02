@@ -138,18 +138,18 @@ Set up your project on the Rigi platform:
 3. Enter project details:
    - Project name
    - Description
-   - Source language (e.g., English)
+   - Source language
+   - **Important!** The language **must exactly** match the language added in Xcode, e.g. English (and not English-US)
 
 ### Configure Pseudo Language
 
-Set the pseudo language in your Rigi project:
+Configure the translation manager in your Rigi project:
 
 ![Set Rigi Pseudo Language](docs/assets/12-set-rigi-pseudo.png)
 
-1. In the project creation wizard
-2. Select **Zulu** as the pseudo language
-3. This must match the language added in Xcode
-4. The system will use this for generating preview markers
+1. In the Translation manager step
+2. You **do not** have to select a Pseudo language
+3. **Important!** Make sure to **unselect** 'Manager files in workspace'
 
 ### Create API Access Token
 
